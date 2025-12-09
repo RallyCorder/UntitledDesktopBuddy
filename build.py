@@ -16,9 +16,13 @@ class Subs(QtWidgets.QWidget):
         self.subtext.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.layout.addWidget(self.subtext,0,0)
 
+    def subsdecay(self):
+        hider=threading.Timer(2,widgetdva.hide)
+        hider.start()
+
 widgetdva=Subs()
-widgetdva.setMaximumSize(100,35)
-widgetdva.setMinimumSize(100,35)
+widgetdva.setMaximumHeight(35)
+widgetdva.setMinimumHeight(35)
 
 class マナ(QtWidgets.QWidget):
 
@@ -29,21 +33,19 @@ class マナ(QtWidgets.QWidget):
         self.label=QtWidgets.QLabel(self)
         self.label.setPixmap(self.pixmap)
         
-        self.myQMenuBar = QtWidgets.QMenuBar(self)
-        exitMenu = self.myQMenuBar.addMenu('Actions')
-        exitAction = QtGui.QAction('Ping', self)        
-        exitAction.triggered.connect(self.showsubs)
-        exitMenu.addAction(exitAction)
+        self.menubar=QtWidgets.QMenuBar(self)
+        actiondd=self.menubar.addMenu('Actions')
+        pingact=QtGui.QAction('Ping', self)        
+        pingact.triggered.connect(self.pingsubs)
+        actiondd.addAction(pingact)
 
-    def showsubs(self):
+    def pingsubs(self):
         if widgetdva.isVisible() == True:
             widgetdva.hide()
         else:
             widgetdva.show()
             widgetdva.subtext.setText("Hallo Deutschland!")
-            timer=threading.Timer(5,widgetdva.hide)
-            timer.start()
-
+            widgetdva.subsdecay()
 
 widget=マナ()
 widget.setMaximumSize(200,281)
