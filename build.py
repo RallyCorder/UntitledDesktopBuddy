@@ -65,10 +65,13 @@ class マナ(QtWidgets.QWidget):
 
         self.pseudorandomblink=[1000,5101,6767,5849,4224,4015,3141,2722,6945,1334,5213,6014,3687]
 
-        timer=QtCore.QTimer(self)
-        timer.timeout.connect(blinktech.blinker)
-        for i in range(442108):
-            timer.start(self.pseudorandomblink[0+1])
+        if Config.animated[0].strip(' \n') == 'False':
+            pass
+        else:
+            timer=QtCore.QTimer(self)
+            timer.timeout.connect(blinktech.blinker)
+            for i in range(442108):
+                timer.start(self.pseudorandomblink[0+1])
 
     def pingsubs(self):
         if widgetdva.isVisible() == True:
@@ -84,9 +87,6 @@ class マナ(QtWidgets.QWidget):
 
 class Blink(QtWidgets.QWidget):
 
-    if Config.animated[0].strip(' \n') == 'False':
-        pass
-    else:
         def blinker(self):
             swap=threading.Timer(0.05,blinktech.blinker2)
             swap.start()
