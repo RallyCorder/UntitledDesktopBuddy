@@ -8,6 +8,7 @@ from PySide6.QtGui import QPixmap, QAction, QWindow, QScreen
 from PySide6.QtCore import Qt, QSize, QObject
 
 app=QtWidgets.QApplication([])
+codecwidth=int(QtWidgets.QApplication.primaryScreen().size().width()/5.33)
 
 class Config():
 
@@ -48,7 +49,7 @@ class マナ(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
 
-        self.pixmap=QPixmap(Config.neutral[0].strip(' \n')).scaledToHeight(300)
+        self.pixmap=QPixmap(Config.neutral[0].strip(' \n')).scaledToHeight(codecwidth)
         self.label=QtWidgets.QLabel(self)
         self.label.setPixmap(self.pixmap)
         self.height=self.pixmap.height()
@@ -138,12 +139,10 @@ class Dialog(QtWidgets.QWidget):
 speechtech=Dialog()
 
 widget=マナ()
-if widget.width < 200:
-    widget.setFixedSize(200,widget.height)
+if widget.width > codecwidth:
+    widget.setFixedSize(codecwidth,widget.height)
 else:
     widget.setFixedSize(widget.width,widget.height)
 widget.show()
-print(widget.height)
-print(widget.width)
 widget.setWindowTitle('Codec')
 sys.exit(app.exec())
