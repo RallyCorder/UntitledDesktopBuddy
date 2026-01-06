@@ -48,9 +48,11 @@ class マナ(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
 
-        self.pixmap=QPixmap(Config.neutral[0].strip(' \n'))
+        self.pixmap=QPixmap(Config.neutral[0].strip(' \n')).scaledToHeight(300)
         self.label=QtWidgets.QLabel(self)
         self.label.setPixmap(self.pixmap)
+        self.height=self.pixmap.height()
+        self.width=self.pixmap.width()//5
         
         self.menubar=QtWidgets.QMenuBar(self)
         actiondd=self.menubar.addMenu('Actions')
@@ -92,17 +94,17 @@ class Blink(QtWidgets.QWidget):
             swap.start()
 
         def blinker2(self):
-            widget.label.move(-200,0)
+            widget.label.move(int(-widget.width),0)
             swap=threading.Timer(0.05,blinktech.blinker3)
             swap.start()
 
         def blinker3(self):
-            widget.label.move(-400,0)
+            widget.label.move(int(-widget.width*2),0)
             swap=threading.Timer(0.05,blinktech.blinker4)
             swap.start()
 
         def blinker4(self):
-            widget.label.move(-200,0)
+            widget.label.move(int(-widget.width),0)
             swap=threading.Timer(0.05,blinktech.blinker5)
             swap.start()
 
@@ -117,13 +119,13 @@ class Dialog(QtWidgets.QWidget):
         pass
     else:
         def speech(self):
-            widget.label.move(-600,0)
+            widget.label.move(int(-widget.width*3),0)
             global swap
             swap=threading.Timer(random.uniform(0.2,0.5),speechtech.speech2)
             swap.start()
                 
         def speech2(self):
-            widget.label.move(-800,0)
+            widget.label.move(int(-widget.width*4),0)
             global swapling
             swapling=threading.Timer(random.uniform(0.2,0.5),speechtech.speech)
             swapling.start()
@@ -136,9 +138,12 @@ class Dialog(QtWidgets.QWidget):
 speechtech=Dialog()
 
 widget=マナ()
-width=widget.pixmap.width()//5
-height=widget.pixmap.height()
-widget.setFixedSize(width,height)
+if widget.width < 200:
+    widget.setFixedSize(200,widget.height)
+else:
+    widget.setFixedSize(widget.width,widget.height)
 widget.show()
+print(widget.height)
+print(widget.width)
 widget.setWindowTitle('Codec')
 sys.exit(app.exec())
