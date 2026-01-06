@@ -143,6 +143,6 @@ if widget.width > codecwidth:
     widget.setFixedSize(codecwidth,widget.height)
 else:
     widget.setFixedSize(widget.width,widget.height)
-widget.show()
 widget.setWindowTitle('Codec')
+widget.show()
 sys.exit(app.exec())
