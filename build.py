@@ -2,6 +2,7 @@ import sys
 import threading
 import re
 import random
+import os
 from PySide6 import QtCore,QtWidgets,QtGui
 from PySide6.QtWidgets import QApplication, QWidget
 from PySide6.QtGui import QPixmap, QAction, QWindow, QScreen
@@ -66,6 +67,10 @@ class マナ(QtWidgets.QWidget):
         blinkact.triggered.connect(blinktech.blinker)
         actiondd.addAction(blinkact)
 
+        netact=QtGui.QAction('Check Network',self)
+        netact.triggered.connect(self.satcheck)
+        actiondd.addAction(netact)
+
         self.pseudorandomblink=[1000,5101,6767,5849,4224,4015,3141,2722,6945,1334,5213,6014,3687]
 
         if Config.animated[0].strip(' \n') == 'False':
@@ -87,6 +92,20 @@ class マナ(QtWidgets.QWidget):
             pass
         else:
             speechtech.speech()
+
+    def satcheck(self):
+        dishback=os.system("ping -c 1 google.com")
+        if dishback == False:
+            widgetdva.show()
+            widgetdva.subtext.setText("Network Online!")
+            widgetdva.subsdecay()
+            speechtech.speech()
+        else:
+            widgetdva.show()
+            widgetdva.subtext.setText("Huh, it seems you aren't connected...")
+            widgetdva.subsdecay()
+            speechtech.speech()
+
 
 class Blink(QtWidgets.QWidget):
 
